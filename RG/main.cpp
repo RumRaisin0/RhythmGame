@@ -5,7 +5,7 @@
 #pragma comment(lib, "fmodex_vc.lib")
 #pragma comment(lib, "gdiplus.lib")
 #pragma comment(lib, "msimg32.lib")
-#define DEFAULTSTRPOS	83
+#define DEFAULTSTRPOS		83
 #define SYNC			5 // SYNC <= 2 [불안정], SYNC >= 4 [안정] SYNC == 5 [권장]
 
 using namespace			Gdiplus;
