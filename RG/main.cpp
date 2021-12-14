@@ -6,26 +6,26 @@
 #pragma comment(lib, "gdiplus.lib")
 #pragma comment(lib, "msimg32.lib")
 #define DEFAULTSTRPOS	83
-#define SYNC			5 // SYNC <= 2 [∫“æ»¡§], SYNC >= 4 [æ»¡§] SYNC == 5 [±«¿Â]
+#define SYNC			5 // SYNC <= 2 [Î∂àÏïàÏ†ï], SYNC >= 4 [ÏïàÏ†ï] SYNC == 5 [Í∂åÏû•]
 
 using namespace			Gdiplus;
 
-int						g_paintpoint[6];
-int						g_hit;
-int						g_game_status;
-int						NowTime = 0;
+int				g_paintpoint[6];
+int				g_hit;
+int				g_game_status;
+int				NowTime = 0;
 enum SOUNDKIND			{ SD_1 = 0 };
 enum EFFSOUNDKIND		{ EFFSD_1 = 0 };
-RECT					Init = { 0, 560, DEFAULTSTRPOS * 6, 590 };
-HWND					hWndMain;
-HINSTANCE				g_hInst;
-ULONG_PTR				g_gpToken;
+RECT				Init = { 0, 560, DEFAULTSTRPOS * 6, 590 };
+HWND				hWndMain;
+HINSTANCE			g_hInst;
+ULONG_PTR			g_gpToken;
 GdiplusStartupInput		g_gpsi;
-FMOD_SYSTEM				*g_psystem;
-FMOD_SOUND				*g_psound[1];
+FMOD_SYSTEM			*g_psystem;
+FMOD_SOUND			*g_psound[1];
 FMOD_CHANNEL			*g_pChannel[1];
-FMOD_SYSTEM				*effg_psystem;
-FMOD_SOUND				*effg_psound[1];
+FMOD_SYSTEM			*effg_psystem;
+FMOD_SOUND			*effg_psound[1];
 FMOD_CHANNEL			*effg_pchannel[1];
 
 void MyLine(HDC hdc, int x1, int y1, int x2, int y2);
@@ -45,18 +45,18 @@ void effsoundoff();
 void effplaysound(EFFSOUNDKIND esound);
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-LPCTSTR	IpszClass = TEXT("°∏∏ÆµÎ∞‘¿”°πMP3 2021");
+LPCTSTR	IpszClass = TEXT("„ÄåÎ¶¨Îì¨Í≤åÏûÑ„ÄçMP3 2021");
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		LPSTR IpszCmdParam, int nCmdShow)
 {
-	HWND				hWnd;
-	MSG					Message;
-	WNDCLASS			WndClass;
+	HWND		hWnd;
+	MSG		Message;
+	WNDCLASS	WndClass;
 
 	g_hInst = hInstance;
 	
-	WndClass.cbClsExtra	= 0;
+	WndClass.cbClsExtra = 0;
 	WndClass.cbWndExtra = 0;
 	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -86,11 +86,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage,
 		WPARAM wParam, LPARAM IParam)
 {
-	HDC				hdc;
-	PAINTSTRUCT		ps;
+	HDC		hdc;
+	PAINTSTRUCT	ps;
 	static HBRUSH	hGray, hBlack;
 	static HBRUSH	NowBrush;
-	static int		count;
 
 	FMOD_System_Update(g_psystem);
 	for(int i = 0; i < 6; i++) g_paintpoint[i] = 1;
@@ -131,8 +130,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage,
 				SetClassLong(hWnd, GCL_HBRBACKGROUND, (LONG)hBlack);
 				playsound(SD_1);
 				InvalidateRect(hWnd, NULL, TRUE);
-				SetTimer(hWnd, 11, 700, UpdateTime); /* »£√‚ ¡÷±‚∞° ¬™¿ªºˆ∑œ ººπ–«— ¡∂¿€ ∞°¥…«œ≥™ ∫“æ»¡§.
-													    uElapse == 750 [±«¿Â] */
+				SetTimer(hWnd, 11, 700, UpdateTime); /* Ìò∏Ï∂ú Ï£ºÍ∏∞Í∞Ä ÏßßÏùÑÏàòÎ°ù ÏÑ∏Î∞ÄÌïú Ï°∞Ïûë Í∞ÄÎä•ÌïòÎÇò Î∂àÏïàÏ†ï.
+									uElapse == 750 [Í∂åÏû•] */
 				break;
 			}
 
@@ -229,14 +228,14 @@ void CALLBACK DelPaintPoint(HWND hWnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 
 void CALLBACK UpdateTime(HWND hWnd, UINT iMessage, UINT idEvent, DWORD dwTime)
 {
-	TCHAR			str[128];
-	DWORD			ThreadID;
-	DWORD			VALUE5 = 5;
-	DWORD			VALUE6 = 6;
-	DWORD			VALUE7 = 7;
-	DWORD			VALUE8 = 8;
-	DWORD			VALUE9 = 9;
-	DWORD			VALUE0 = 0;
+	TCHAR	str[128];
+	DWORD	ThreadID;
+	DWORD	VALUE5 = 5;
+	DWORD	VALUE6 = 6;
+	DWORD	VALUE7 = 7;
+	DWORD	VALUE8 = 8;
+	DWORD	VALUE9 = 9;
+	DWORD	VALUE0 = 0;
 
 	NowTime += 1;
 	switch(NowTime)
@@ -389,9 +388,9 @@ void CALLBACK UpdateTime(HWND hWnd, UINT iMessage, UINT idEvent, DWORD dwTime)
 
 		case 132:
 			wsprintf(str, TEXT("GREAT: %d\r\nMISS: %d"), g_hit, 38 - g_hit);
-			if(MessageBox(hWnd, str, TEXT("Ω∫ƒ⁄æÓ"), MB_RETRYCANCEL) == IDRETRY)
+			if(MessageBox(hWnd, str, TEXT("Ïä§ÏΩîÏñ¥"), MB_RETRYCANCEL) == IDRETRY)
 			{
-				g_game_status = 1; // TODO: √ ±‚»≠ »ƒ ¿ÁΩ√¿€
+				g_game_status = 1; // TODO: Ï¥àÍ∏∞Ìôî ÌõÑ Ïû¨ÏãúÏûë
 				NowTime = 0;
 			}
 			else SendMessage(hWnd, WM_CLOSE, 0, 0);
@@ -519,9 +518,9 @@ void drawByDC(HWND hWnd, HDC hMemDC, int x, int y)
 
 void DrawGame(HWND hWnd, HDC hdc)
 {
-	HPEN			hMyPen, hOldPen;
-	LOGPEN			logpen;
-	POINT			pt;
+	HPEN	hMyPen, hOldPen;
+	LOGPEN	logpen;
+	POINT	pt;
 
 	if(!g_game_status) Menu(hdc);
 	else
@@ -592,7 +591,7 @@ void Menu(HDC hdc)
 	POINT			pt;
 
 	hFont = CreateFont(30, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, 
-			VARIABLE_PITCH | FF_ROMAN, TEXT("≥™¥ÆπŸ∏•∆Ê Bold"));
+			VARIABLE_PITCH | FF_ROMAN, TEXT("ÎÇòÎàîÎ∞îÎ•∏Ìéú Bold"));
 	OldFont = (HFONT)SelectObject(hdc, hFont);
 
 	logpen.lopnStyle = PS_SOLID;
@@ -616,10 +615,10 @@ void Menu(HDC hdc)
 	DeleteObject(hMyPen);
 
 	SetBkMode(hdc, TRANSPARENT);
-	MyTextOut(hdc, 140, 582, TEXT("æ∆π´ ≈∞≥™ ¥≠∑Ø Ω√¿€«’¥œ¥Ÿ."));
+	MyTextOut(hdc, 140, 582, TEXT("ÏïÑÎ¨¥ ÌÇ§ÎÇò ÎàåÎü¨ ÏãúÏûëÌï©ÎãàÎã§."));
 
 	hFont = CreateFont(20, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, 
-		VARIABLE_PITCH | FF_ROMAN, TEXT("≥™¥ÆπŸ∏•∆Ê Bold"));
+		VARIABLE_PITCH | FF_ROMAN, TEXT("ÎÇòÎàîÎ∞îÎ•∏Ìéú Bold"));
 	OldFont = (HFONT)SelectObject(hdc, hFont);
 
 	MyTextOut(hdc, 24, 545, TEXT("NUM 5"));
